@@ -42,7 +42,10 @@ def parse_layout(elems, font_stat, combine=False):
         m.feats = defaultdict(bool)
         prefix = ''
         if isinstance(m, LTTextLine) and m.font_name:
-            prefix = m.font_name + '-' + str(m.font_size) + '-'
+            if isinstance(m.font_name, str):
+                prefix = m.font_name + '-' + str(m.font_size) + '-'
+            else:
+                prefix = (m.font_name).decode("latin-1") + '-' + str(m.font_size) + '-'
         m.xc = (m.x0 + m.x1) / 2.0
         m.yc = (m.y0 + m.y1) / 2.0
         m.feats[prefix + 'x0'] = m.x0_grid = m.x0 // grid_size
@@ -690,7 +693,10 @@ def parse_tree_structure(elems, font_stat, page_num, ref_page_seen, tables,
         m.feats = defaultdict(bool)
         prefix = ''
         if isinstance(m, LTTextLine) and m.font_name:
-            prefix = m.font_name + '-' + str(m.font_size) + '-'
+            if isinstance(m.font_name, str):
+                prefix = m.font_name + '-' + str(m.font_size) + '-'
+            else:
+                prefix = (m.font_name).decode("latin-1") + '-' + str(m.font_size) + '-'
         # center X coordinate
         m.xc = (m.x0 + m.x1) / 2.0
         m.yc = (m.y0 + m.y1) / 2.0
